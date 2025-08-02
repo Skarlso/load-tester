@@ -1,0 +1,26 @@
+loadTest:
+  count: 10
+  delay: 0
+
+randomization:
+  namePrefix: "test-pod"
+  suffixLength: 8
+
+resource: pods
+
+template:
+  apiVersion: v1
+  kind: Pod
+  metadata:
+    name: "{{ .RandomName }}"  # Will be replaced with randomized name
+    namespace: default
+    labels:
+      app: load-test
+      generated: "true"
+  spec:
+    containers:
+    - name: test-container
+      image: nginx:latest
+      ports:
+      - containerPort: 80
+    restartPolicy: Always
